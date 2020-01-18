@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="inventoryResponse" format="xml">
+      <types:example format="xml" element="body" location="examples/sampleListInventoryResponse-2.xml"/>
+    </types:type>
+    <types:type name="inventoryRequest" format="xml">
+      <types:example format="xml" element="{http://schemas.xmlsoap.org/soap/envelope/}Envelope" location="examples/listInventorySOAPExample.xml"/>
+    </types:type>
+    <types:type name="faultMessage" format="xml">
+      <types:example format="xml" element="{http://schemas.xmlsoap.org/soap/envelope/}Fault" location="examples/soapFaultExample-1.xml"/>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#cb098f4b-a979-4a2d-8df4-b9edbdb59f7e"/>
+  <types:enrichment select="#e21d93e4-e415-4b11-b3dc-aa6e6ed24279">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="inventoryResponse"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#af648055-5c03-447b-8b8d-5ece10059a15"/>
+  <types:enrichment select="#9080b33a-c08b-44bf-9f92-288d63a49b82">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="faultMessage"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
