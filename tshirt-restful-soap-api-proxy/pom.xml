@@ -55,13 +55,6 @@
             <classifier>mule-plugin</classifier>
         </dependency>
     	<dependency>
-            <groupId>dd8ba472-505d-43e2-a81b-b131496c7719</groupId>
-            <artifactId>tshirt-specification</artifactId>
-            <version>3.0.1</version>
-            <classifier>raml</classifier>
-            <type>zip</type>
-        </dependency>
-    	<dependency>
             <groupId>org.mule.modules</groupId>
             <artifactId>mule-soapkit-module</artifactId>
             <version>1.2.3</version>
@@ -72,6 +65,13 @@
             <artifactId>mule-validation-module</artifactId>
             <version>1.4.0</version>
             <classifier>mule-plugin</classifier>
+        </dependency>
+    	<dependency>
+            <groupId>dd8ba472-505d-43e2-a81b-b131496c7719</groupId>
+            <artifactId>tshirt-specification</artifactId>
+            <version>3.0.7</version>
+            <classifier>raml</classifier>
+            <type>zip</type>
         </dependency>
     </dependencies>
 

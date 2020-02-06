@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:apikit-soap="http://www.mulesoft.org/schema/mule/apikit-soap" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd  http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
-http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
-http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:apikit-soap="http://www.mulesoft.org/schema/mule/apikit-soap" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd  http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
     <http:listener-config name="tshirt-specification-httpListenerConfig">
-        <http:listener-connection host="0.0.0.0" port="8081" usePersistentConnections="false"/>
+        <http:listener-connection host="0.0.0.0" port="8081" usePersistentConnections="false" />
     </http:listener-config>
-    <apikit:config name="tshirt-specification-config" api="resource::dd8ba472-505d-43e2-a81b-b131496c7719:tshirt-specification:3.0.1:raml:zip:tshirt-specification.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" >
-		<apikit:flow-mappings >
-			<apikit:flow-mapping resource="/inventory" action="get" flow-ref="get:\inventory:tshirt-specification-config" />
-		</apikit:flow-mappings>
-	</apikit:config>
+    <apikit:config name="tshirt-specification-config" api="resource::dd8ba472-505d-43e2-a81b-b131496c7719:tshirt-specification:3.0.7:raml:zip:tshirt-specification.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
     <wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="2c2de529-02b5-403e-83c7-ccb48a3f2eed">
         <wsc:connection wsdlLocation="http://tshirts.demos.mulesoft.com/?wsdl" service="TshirtServicePortTypeService" port="TshirtServicePortTypePort" address="http://tshirts.demos.mulesoft.com/">
             <wsc:web-service-security actor="http://schemas.xmlsoap.org/soap/actor/next" />
         </wsc:connection>
     </wsc:config>
     <api-gateway:autodiscovery apiId="15961113" doc:name="API Autodiscovery" doc:id="a97051d2-86b2-464f-9e8a-2f0a0063d7ae" flowRef="tshirt-specification-main" />
-	<flow name="tshirt-specification-main">
+    <flow name="tshirt-specification-main">
         <http:listener config-ref="tshirt-specification-httpListenerConfig" path="/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
                 <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
@@ -156,7 +150,7 @@ payload.body.ns0#ListInventoryResponse.*inventory map ( inventory , indexOfInven
             </ee:message>
         </ee:transform>
     </flow>
-    <flow name="post:\orders:application\json:tshirt-specification-config">
+	<flow name="post:\orders:application\json:tshirt-specification-config">
         <ee:transform doc:name="Transform Message" doc:id="d800488f-ab82-41f5-80a0-b62d4333c623">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
@@ -179,7 +173,7 @@ ns ns0 http://mulesoft.org/tshirt-service
             </ee:message>
         </ee:transform>
         <wsc:consume operation="OrderTshirt" doc:name="Consume" doc:id="e7a0fc97-fe67-447c-8ba5-3490b47cae62" config-ref="Web_Service_Consumer_Config" />
-		<ee:transform doc:name="Transform Message" doc:id="74d0899d-18a9-4df3-b2d3-ee6415b53d18">
+        <ee:transform doc:name="Transform Message" doc:id="74d0899d-18a9-4df3-b2d3-ee6415b53d18">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -188,19 +182,19 @@ ns ns0 http://mulesoft.org/tshirt-service
 payload.body.ns0#OrderTshirtResponse]]></ee:set-payload>
             </ee:message>
         </ee:transform>
-		<error-handler >
-			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="b6519cde-558b-4899-8770-d81dc48603f7" type="WSC:SOAP_FAULT">
-				<ee:transform doc:name="Transform Message" doc:id="9080b33a-c08b-44bf-9f92-288d63a49b82" >
-					<ee:message >
-						<ee:set-payload ><![CDATA[%dw 2.0
+        <error-handler>
+            <on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="b6519cde-558b-4899-8770-d81dc48603f7" type="WSC:SOAP_FAULT">
+                <ee:transform doc:name="Transform Message" doc:id="9080b33a-c08b-44bf-9f92-288d63a49b82">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
 output application/json
 import * from dw::core::Strings
 ---
 { "message": trim(substringAfter(error.description, ": ")) }]]></ee:set-payload>
-					</ee:message>
-				</ee:transform>
-			</on-error-propagate>
-		</error-handler>
+                    </ee:message>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
     </flow>
     <flow name="post:\orders\status:application\json:tshirt-specification-config">
         <ee:transform doc:name="Transform Message" doc:id="9cfdfd5a-0d63-4db4-984f-62aa57a317a7">
@@ -215,7 +209,7 @@ ns ns0 http://mulesoft.org/tshirt-service
             </ee:message>
         </ee:transform>
         <wsc:consume doc:name="Consume" doc:id="f8f3bede-1051-483e-a09c-8197600b5736" config-ref="Web_Service_Consumer_Config" operation="TrackOrder" />
-		<ee:transform doc:name="Transform Message" doc:id="e4162353-7ea6-48d2-a7a1-5f8cf59a3f70">
+        <ee:transform doc:name="Transform Message" doc:id="e4162353-7ea6-48d2-a7a1-5f8cf59a3f70">
             <ee:message>
                 <ee:set-payload><![CDATA[%dw 2.0
 output application/json
@@ -224,18 +218,57 @@ ns ns0 http://mulesoft.org/tshirt-service
 payload.body.ns0#TrackOrderResponse]]></ee:set-payload>
             </ee:message>
         </ee:transform>
-		<validation:is-not-null doc:id="b5c6949c-ad6c-464a-9285-d0114562e6e0" value="#[payload]" message="Order not found" doc:name="Validate not empty"/>
+        <validation:is-not-null doc:id="b5c6949c-ad6c-464a-9285-d0114562e6e0" value="#[payload]" message="Order not found" doc:name="Validate not empty" />
+        <error-handler>
+            <on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="769af874-950c-4f1f-b768-8290fc0e86f5" type="VALIDATION:NULL">
+				<ee:transform doc:name="Transform Message" doc:id="ef885b68-0ec2-44ce-ae74-8e0e0c2fac91">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{ "message": "Resource could not be found" }]]></ee:set-payload>
+                    </ee:message>
+                </ee:transform>
+				<set-variable value="404" doc:name="Set Variable" doc:id="dd098f47-d1e3-479c-99fe-08c77c2c7c8c" variableName="httpStatus" />
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+    <flow name="get:\orders\(orderId):tshirt-specification-config">
+        <ee:transform doc:name="Transform Message" doc:id="46059538-38b9-4830-9350-e99595ab1b8a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 http://mulesoft.org/tshirt-service
+---
+{
+	ns0#TrackOrder: {
+		orderId: attributes.uriParams.orderId
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume operation="TrackOrder" doc:name="Consume" doc:id="3ade4856-5058-42dc-a984-19e4dfa9447b" config-ref="Web_Service_Consumer_Config"/>
+		<ee:transform xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" doc:id="59559cea-e74d-4796-ad17-76a5dd072aa5">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+ns ns0 http://mulesoft.org/tshirt-service
+---
+payload.body.ns0#TrackOrderResponse]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+		<validation:is-not-null doc:name="Is not null" doc:id="41fffec2-73b8-4674-95c6-f28f355dc2ed" value="#[payload]"/>
 		<error-handler >
-			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="769af874-950c-4f1f-b768-8290fc0e86f5" type="VALIDATION:NULL">
-				<ee:transform doc:name="Transform Message" doc:id="ef885b68-0ec2-44ce-ae74-8e0e0c2fac91" >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="0b259485-e3ac-4333-832d-e0fcd378f99a" type="VALIDATION:NULL">
+				<ee:transform doc:name="Transform Message" doc:id="08174869-b8af-4c22-868c-9ace70f4a5f0" >
 					<ee:message >
 						<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
 ---
-{ "message": "Could not find order"}]]></ee:set-payload>
+{ "message": "Resource could not be found" }]]></ee:set-payload>
 					</ee:message>
 				</ee:transform>
-				<set-variable value="404" doc:name="Set Variable" doc:id="dd098f47-d1e3-479c-99fe-08c77c2c7c8c" variableName="httpStatus"/>
+				<set-variable value="404" doc:name="Set Variable" doc:id="8780269d-5fbb-49b3-8e76-9c1c3d6ef2dd" variableName="httpStatus"/>
 			</on-error-propagate>
 		</error-handler>
     </flow>
